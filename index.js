@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const app = express();
 
 mongoose
-  .connect("mongodb://localhost:27017")
+  .connect("mongodb://localhost:27017/inventrio")
   .then(
     app.listen(4000, () => {
       console.log("connected to port");
