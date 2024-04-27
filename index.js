@@ -1,10 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 import customerRoute from "./routes/customer.route.js";
+import productRoute from "./routes/product.route.js";
 
 const app = express();
 
 app.use("/merchant", customerRoute);
+app.use("/merchant", productRoute);
 
 mongoose
   .connect("mongodb://localhost:27017/inventrio")
