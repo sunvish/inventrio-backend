@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
 const merchantSchema = mongoose.Schema({
-  name: {
-    type: "String",
-    required: true,
-  },
-
   shopName: {
     type: "String",
     required: true,
