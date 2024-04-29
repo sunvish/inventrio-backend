@@ -3,9 +3,10 @@ import mongoose from "mongoose";
 import customerRoute from "./routes/customer.route.js";
 import productRoute from "./routes/product.route.js";
 import merchantRoute from "./routes/merchant.route.js";
+import cors from "cors";
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 app.use("/merchant", customerRoute);
 app.use("/merchant", productRoute);

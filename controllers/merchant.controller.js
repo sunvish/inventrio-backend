@@ -10,7 +10,7 @@ dotenv.config();
 export const registerMerchant = async (req, res) => {
   const { location, shopName, userName, email, password } = req.body;
 
-  const hashedPassword = bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const isExistingMerchant = await merchant.findOne({ email: email });
 
@@ -30,25 +30,29 @@ export const registerMerchant = async (req, res) => {
 };
 
 export const signInMerchant = async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const isExistingMerchant = await merchant.findOne({ email: email });
+    const isExistingMerchant = await merchant.findOne({ email: email });
 
-  if (
-    !isExistingMerchant &&
-    !(await bcrypt.compare(password, isExistingMerchant.password))
-  ) {
-    res.status(400).json({ mssg: "invalid credentials" });
+    if (
+      !isExistingMerchant &&
+      !(await bcrypt.compare(password, isExistingMerchant.password))
+    ) {
+      res.status(400).json({ mssg: "invalid credentials" });
+    }
+
+    const token = jwt.sign(
+      { merchantId: isExistingMerchant.merchantId },
+      process.env.SECRET_KEY,
+      { expiresIn: "5h" }
+    );
+
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json(isExistingMerchant);
+  } catch (error) {
+    console.log(error.message);
   }
-
-  const token = jwt.sign(
-    { merchantId: isExistingMerchant.merchantId },
-    process.env.SECRET_KEY,
-    { expiresIn: "5h" }
-  );
-
-  res
-    .status(200)
-    .cookie("access_token", token, { httpOnly: true })
-    .json(isExistingMerchant);
 };
