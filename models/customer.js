@@ -1,24 +1,28 @@
 import mongoose from "mongoose";
 
-const customerSchema = mongoose.Schema({
-  name: {
-    type: "String",
-    required: true,
+const customerSchema = mongoose.Schema(
+  {
+    name: {
+      type: "String",
+      required: true,
+    },
+    email: {
+      type: "String",
+      required: true,
+      unique: true,
+    },
+    phoneNumber: {
+      type: "Number",
+      required: true,
+    },
+    merchantId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "merchant",
+      required: true,
+    },
   },
-  email: {
-    type: "String",
-    required: true,
-    unique: true,
-  },
-  phoneNumber: {
-    type: "Number",
-    required: true,
-  },
-  merchantId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "merchant",
-  },
-});
+  { timestamps: true }
+);
 
 const customer = mongoose.model("customer", customerSchema);
 

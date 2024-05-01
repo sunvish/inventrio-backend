@@ -34,7 +34,7 @@ const salesSchema = mongoose.Schema({
       },
     },
   ],
-});
+},{timestamps : true});
 
 const sales = mongoose.model("sales", salesSchema);
 export default sales;

@@ -22,7 +22,7 @@ const merchantSchema = mongoose.Schema({
     type: "String",
     required: true,
   },
-});
+},{timestamps : true});
 
 const merchant = mongoose.model("merchant", merchantSchema);
 export default merchant;

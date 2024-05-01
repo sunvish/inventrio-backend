@@ -27,7 +27,7 @@ const productSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "merchant",
   },
-});
+},{timestamps : true});
 
 const product = mongoose.model("product", productSchema);
 export default product;
