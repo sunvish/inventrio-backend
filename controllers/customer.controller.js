@@ -14,10 +14,9 @@ export const getCustomers = async (req, res) => {
 
 export const createCustomer = async (req, res) => {
   try {
-    
     const { name, email, phoneNumber } = req.body;
-    if(!(name&&email&&phoneNumber)){
-      res.status(400).json({message: "Bad request"})
+    if (!(name && email && phoneNumber)) {
+      res.status(400).json({ message: "Bad request" });
     }
     const merchantId = req.merchantId;
 
@@ -32,4 +31,19 @@ export const createCustomer = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const updateCustomer = async (req, res) => {
+  const {} = req.body;
+
+  const merchantId = req.merchantId;
+  await customer.findOneAndUpdate({ _id: id, merchantId });
+};
+
+export const deleteCustomer = async (req, res) => {
+  const { id } = req.params;
+  const merchantId = req.merchantId;
+
+  await customer.findOneAndDelete({ _id: id, merchantId });
+  res.status(200).json({ mssg: "Deleted " });
 };
